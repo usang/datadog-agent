@@ -23,7 +23,7 @@ func TestWriter(t *testing.T) {
 	atomic.StoreInt64(&inMemoryFs, 1)
 	defer atomic.StoreInt64(&inMemoryFs, 0)
 
-	writer := NewTrafficCaptureWriter("foo/bar", 1)
+	writer := NewTrafficCaptureWriter(1)
 
 	// register pools
 	manager := packets.NewPoolManager(packets.NewPool(config.Datadog.GetInt("dogstatsd_buffer_size")))
@@ -42,7 +42,7 @@ func TestWriter(t *testing.T) {
 		defer wg.Done()
 
 		close(start)
-		writer.Capture(5 * time.Second)
+		writer.Capture("foo/bar", 5*time.Second)
 	}(&wg)
 
 	wg.Add(1)

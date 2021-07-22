@@ -29,6 +29,7 @@ import (
 
 var (
 	dsdCaptureDuration time.Duration
+	dsdCaptureFilePath string
 )
 
 const (
@@ -38,6 +39,7 @@ const (
 func init() {
 	AgentCmd.AddCommand(dogstatsdCaptureCmd)
 	dogstatsdCaptureCmd.Flags().DurationVarP(&dsdCaptureDuration, "duration", "d", defaultCaptureDuration, "Duration traffic capture should span.")
+	dogstatsdCaptureCmd.Flags().StringVarP(&dsdCaptureFilePath, "path", "p", "", "Directory path to write the captue to.")
 
 	// shut up grpc client!
 	grpclog.SetLogger(log.New(ioutil.Discard, "", 0))

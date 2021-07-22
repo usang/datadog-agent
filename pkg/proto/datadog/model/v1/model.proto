@@ -16,9 +16,9 @@ message HostnameReply {
 
 
 // Dogstatsd capture types
-
 message CaptureTriggerRequest {
     string duration = 1;
+    string path = 2;
 }
 
 message CaptureTriggerResponse {
