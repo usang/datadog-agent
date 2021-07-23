@@ -36,7 +36,7 @@ func easyjson9972aa54DecodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 			continue
 		}
 		switch key {
-		case "kinds":
+		case "secl":
 			if in.IsNull() {
 				in.Skip()
 				out.Kinds = nil
@@ -74,7 +74,7 @@ func easyjson9972aa54EncodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"kinds\":"
+		const prefix string = ",\"secl\":"
 		out.RawString(prefix[1:])
 		if in.Kinds == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 			out.RawString("null")

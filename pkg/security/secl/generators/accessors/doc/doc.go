@@ -10,7 +10,7 @@ package doc
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	"io/ioutil"
 	"sort"
 
 	"github.com/DataDog/datadog-agent/pkg/security/secl/generators/accessors/common"
@@ -18,7 +18,7 @@ import (
 
 // easyjson:json
 type Documentation struct {
-	Kinds []DocEventKind `json:"kinds"`
+	Kinds []DocEventKind `json:"secl"`
 }
 
 // easyjson:json
@@ -33,21 +33,21 @@ type DocEventProperty struct {
 	Type string `json:"type"`
 }
 
-func prettyprint(v interface{}) (string, error) {
+func prettyprint(v interface{}) ([]byte, error) {
 	base, err := json.Marshal(v)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	var out bytes.Buffer
 	if err := json.Indent(&out, base, "", "  "); err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return out.String(), nil
+	return out.Bytes(), nil
 }
 
-func GenerateDocJSON(module *common.Module) {
+func GenerateDocJSON(module *common.Module, outputPath string) error {
 	kinds := make(map[string][]DocEventProperty)
 
 	for name, field := range module.Fields {
@@ -78,5 +78,10 @@ func GenerateDocJSON(module *common.Module) {
 		Kinds: docKinds,
 	}
 
-	fmt.Print(prettyprint(doc))
+	res, err := prettyprint(doc)
+	if err != nil {
+		return err
+	}
+
+	return ioutil.WriteFile(outputPath, res, 0644)
 }
