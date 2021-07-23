@@ -23,6 +23,7 @@ import (
 	"text/template"
 
 	"github.com/DataDog/datadog-agent/pkg/security/secl/generators/accessors/common"
+	"github.com/DataDog/datadog-agent/pkg/security/secl/generators/accessors/doc"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/fatih/structtag"
 	"golang.org/x/tools/go/loader"
@@ -39,6 +40,7 @@ var (
 	strict    bool
 	verbose   bool
 	mock      bool
+	genDoc    bool
 	program   *loader.Program
 	packages  map[string]*types.Package
 	buildTags string
@@ -723,6 +725,11 @@ func (e *Event) SetFieldValue(field eval.Field, value interface{}) error {
 		panic(err)
 	}
 
+	if genDoc {
+		doc.GenerateDocJSON(module)
+		return
+	}
+
 	tmpfile, err := ioutil.TempFile(path.Dir(output), "accessors")
 	if err != nil {
 		log.Fatal(err)
@@ -749,6 +756,7 @@ func (e *Event) SetFieldValue(field eval.Field, value interface{}) error {
 func init() {
 	flag.BoolVar(&verbose, "verbose", false, "Be verbose")
 	flag.BoolVar(&mock, "mock", false, "Mock accessors")
+	flag.BoolVar(&genDoc, "doc", false, "Generate documentation JSON")
 	flag.StringVar(&filename, "input", os.Getenv("GOFILE"), "Go file to generate decoders from")
 	flag.StringVar(&pkgname, "package", pkgPrefix+"/"+os.Getenv("GOPACKAGE"), "Go package name")
 	flag.StringVar(&buildTags, "tags", "", "build tags used for parsing")
