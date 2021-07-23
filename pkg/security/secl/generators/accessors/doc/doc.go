@@ -11,6 +11,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
+	"regexp"
 	"sort"
 	"strings"
 
@@ -24,15 +25,17 @@ type Documentation struct {
 
 // easyjson:json
 type DocEventKind struct {
-	Name       string             `json:"name"`
-	Properties []DocEventProperty `json:"properties"`
+	Name             string             `json:"name"`
+	Definition       string             `json:"definition"`
+	FromAgentVersion string             `json:"from_agent_version"`
+	Properties       []DocEventProperty `json:"properties"`
 }
 
 // easyjson:json
 type DocEventProperty struct {
 	Name string `json:"name"`
 	Type string `json:"type"`
-	Doc  string `json:"doc"`
+	Doc  string `json:"definition"`
 }
 
 func prettyprint(v interface{}) ([]byte, error) {
@@ -66,9 +69,12 @@ func GenerateDocJSON(module *common.Module, outputPath string) error {
 			return properties[i].Name < properties[j].Name
 		})
 
+		definition, minVersion := extractVersionAndDefinition(module.EventTypeDocs[name])
 		docKinds = append(docKinds, DocEventKind{
-			Name:       name,
-			Properties: properties,
+			Name:             name,
+			Definition:       definition,
+			FromAgentVersion: minVersion,
+			Properties:       properties,
 		})
 	}
 
@@ -87,4 +93,20 @@ func GenerateDocJSON(module *common.Module, outputPath string) error {
 	}
 
 	return ioutil.WriteFile(outputPath, res, 0644)
+}
+
+var (
+	minVersionRE      = regexp.MustCompile(`^\[(?P<version>[0-9.]+)\](?P<def>.*)`)
+	minVersionREIndex = minVersionRE.SubexpIndex("version")
+	definitionREIndex = minVersionRE.SubexpIndex("def")
+)
+
+func extractVersionAndDefinition(comment string) (string, string) {
+	trimmed := strings.TrimSpace(comment)
+
+	if matches := minVersionRE.FindStringSubmatch(trimmed); matches != nil {
+		return matches[definitionREIndex], matches[minVersionREIndex]
+	}
+
+	return trimmed, ""
 }

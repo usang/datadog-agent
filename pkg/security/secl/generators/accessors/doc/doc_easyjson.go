@@ -44,7 +44,7 @@ func easyjson9972aa54DecodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 				in.Delim('[')
 				if out.Kinds == nil {
 					if !in.IsDelim(']') {
-						out.Kinds = make([]DocEventKind, 0, 1)
+						out.Kinds = make([]DocEventKind, 0, 0)
 					} else {
 						out.Kinds = []DocEventKind{}
 					}
@@ -138,7 +138,7 @@ func easyjson9972aa54DecodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 			out.Name = string(in.String())
 		case "type":
 			out.Type = string(in.String())
-		case "doc":
+		case "definition":
 			out.Doc = string(in.String())
 		default:
 			in.SkipRecursive()
@@ -165,7 +165,7 @@ func easyjson9972aa54EncodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 		out.String(string(in.Type))
 	}
 	{
-		const prefix string = ",\"doc\":"
+		const prefix string = ",\"definition\":"
 		out.RawString(prefix)
 		out.String(string(in.Doc))
 	}
@@ -216,6 +216,10 @@ func easyjson9972aa54DecodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 		switch key {
 		case "name":
 			out.Name = string(in.String())
+		case "definition":
+			out.Definition = string(in.String())
+		case "from_agent_version":
+			out.FromAgentVersion = string(in.String())
 		case "properties":
 			if in.IsNull() {
 				in.Skip()
@@ -257,6 +261,16 @@ func easyjson9972aa54EncodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 		const prefix string = ",\"name\":"
 		out.RawString(prefix[1:])
 		out.String(string(in.Name))
+	}
+	{
+		const prefix string = ",\"definition\":"
+		out.RawString(prefix)
+		out.String(string(in.Definition))
+	}
+	{
+		const prefix string = ",\"from_agent_version\":"
+		out.RawString(prefix)
+		out.String(string(in.FromAgentVersion))
 	}
 	{
 		const prefix string = ",\"properties\":"

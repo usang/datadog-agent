@@ -14,6 +14,7 @@ type Module struct {
 	Fields          map[string]*StructField
 	Iterators       map[string]*StructField
 	EventTypes      map[string]bool
+	EventTypeDocs   map[string]string
 	Mock            bool
 }
 

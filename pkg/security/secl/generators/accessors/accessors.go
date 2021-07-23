@@ -172,6 +172,7 @@ func handleSpec(astFile *ast.File, spec interface{}, prefix, aliasPrefix, event 
 
 				if e, ok := tag.Lookup("event"); ok {
 					event = e
+					module.EventTypeDocs[e] = fieldCommentText
 				}
 
 				if isEmbedded := len(field.Names) == 0; !isEmbedded {
@@ -355,14 +356,15 @@ func parseFile(filename string, pkgName string) (*common.Module, error) {
 	}
 
 	module = &common.Module{
-		Name:       moduleName,
-		SourcePkg:  pkgName,
-		TargetPkg:  pkgName,
-		BuildTags:  buildTags,
-		Fields:     make(map[string]*common.StructField),
-		Iterators:  make(map[string]*common.StructField),
-		EventTypes: make(map[string]bool),
-		Mock:       mock,
+		Name:          moduleName,
+		SourcePkg:     pkgName,
+		TargetPkg:     pkgName,
+		BuildTags:     buildTags,
+		Fields:        make(map[string]*common.StructField),
+		Iterators:     make(map[string]*common.StructField),
+		EventTypes:    make(map[string]bool),
+		EventTypeDocs: make(map[string]string),
+		Mock:          mock,
 	}
 
 	// If the target package is different from the model package
