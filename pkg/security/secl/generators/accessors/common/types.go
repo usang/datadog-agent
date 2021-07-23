@@ -30,4 +30,5 @@ type StructField struct {
 	IsOrigTypePtr bool
 	Iterator      *StructField
 	Weight        int64
+	CommentText   string
 }

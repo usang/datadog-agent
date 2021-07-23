@@ -12,6 +12,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"sort"
+	"strings"
 
 	"github.com/DataDog/datadog-agent/pkg/security/secl/generators/accessors/common"
 )
@@ -31,6 +32,7 @@ type DocEventKind struct {
 type DocEventProperty struct {
 	Name string `json:"name"`
 	Type string `json:"type"`
+	Doc  string `json:"doc"`
 }
 
 func prettyprint(v interface{}) ([]byte, error) {
@@ -54,6 +56,7 @@ func GenerateDocJSON(module *common.Module, outputPath string) error {
 		kinds[field.Event] = append(kinds[field.Event], DocEventProperty{
 			Name: name,
 			Type: field.ReturnType,
+			Doc:  strings.TrimSpace(field.CommentText),
 		})
 	}
 

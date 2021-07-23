@@ -138,6 +138,8 @@ func easyjson9972aa54DecodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 			out.Name = string(in.String())
 		case "type":
 			out.Type = string(in.String())
+		case "doc":
+			out.Doc = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -161,6 +163,11 @@ func easyjson9972aa54EncodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 		const prefix string = ",\"type\":"
 		out.RawString(prefix)
 		out.String(string(in.Type))
+	}
+	{
+		const prefix string = ",\"doc\":"
+		out.RawString(prefix)
+		out.String(string(in.Doc))
 	}
 	out.RawByte('}')
 }
@@ -217,7 +224,7 @@ func easyjson9972aa54DecodeGithubComDataDogDatadogAgentPkgSecuritySeclGenerators
 				in.Delim('[')
 				if out.Properties == nil {
 					if !in.IsDelim(']') {
-						out.Properties = make([]DocEventProperty, 0, 2)
+						out.Properties = make([]DocEventProperty, 0, 1)
 					} else {
 						out.Properties = []DocEventProperty{}
 					}
