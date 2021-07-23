@@ -117,7 +117,7 @@ type Event struct {
 	ProcessContext   ProcessContext   `field:"process" event:"*"`
 	ContainerContext ContainerContext `field:"container"`
 
-	Chmod       ChmodEvent    `field:"chmod" event:"chmod"`
+	Chmod       ChmodEvent    `field:"chmod" event:"chmod"` // [7.27] chmod event definition
 	Chown       ChownEvent    `field:"chown" event:"chown"`
 	Open        OpenEvent     `field:"open" event:"open"`
 	Mkdir       MkdirEvent    `field:"mkdir" event:"mkdir"`
@@ -278,7 +278,7 @@ type ExecEvent struct {
 
 // FileFields holds the information required to identify a file
 type FileFields struct {
-	UID   uint32    `field:"uid"`
+	UID   uint32    `field:"uid"` // uid field definition
 	User  string    `field:"user,ResolveFileFieldsUser"`
 	GID   uint32    `field:"gid"`
 	Group string    `field:"group,ResolveFileFieldsGroup"`
