@@ -16,6 +16,7 @@
 // pkg/security/tests/schemas/rename.schema.json
 // pkg/security/tests/schemas/selinux.schema.json
 // pkg/security/tests/schemas/usr.json
+//go:build functionaltests
 // +build functionaltests
 
 package schemas
@@ -167,7 +168,7 @@ func bindataContainerJson() (*asset, error) {
 		name:        "/container.json",
 		size:        236,
 		md5checksum: "",
-		mode:        os.FileMode(438),
+		mode:        os.FileMode(420),
 		modTime:     time.Unix(1, 0),
 	}
 
@@ -195,7 +196,7 @@ func bindataContainercontextJson() (*asset, error) {
 		name:        "/container_context.json",
 		size:        274,
 		md5checksum: "",
-		mode:        os.FileMode(438),
+		mode:        os.FileMode(420),
 		modTime:     time.Unix(1, 0),
 	}
 
@@ -447,7 +448,7 @@ func bindataProcesscontextJson() (*asset, error) {
 		name:        "/process_context.json",
 		size:        1060,
 		md5checksum: "",
-		mode:        os.FileMode(438),
+		mode:        os.FileMode(420),
 		modTime:     time.Unix(1, 0),
 	}
 
