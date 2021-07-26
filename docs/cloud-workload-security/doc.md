@@ -266,7 +266,7 @@
 | open.file.path             | string |                      |
 | open.file.rights           | int    |                      |
 | open.file.uid              | int    | uid field definition |
-| open.file.user             | string |                      |
+| open.file.user             | string | test traduction      |
 | open.flags                 | int    |                      |
 | open.retval                | int    |                      |
 
