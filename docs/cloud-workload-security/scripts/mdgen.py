@@ -2,6 +2,7 @@ import argparse
 import json
 import sys
 
+
 class MarkdownTable:
     def __init__(self, n_cols):
         self.n_cols = n_cols
@@ -40,6 +41,7 @@ def event_types_list(event_types, file=sys.stdout):
         table.append_line([event_type[key] for key in keys])
 
     table.display(file=file)
+
 
 def event_type_properties_list(event_type, file=sys.stdout):
     print(f"### Event `{event_type['name']}`\n", file=file)
