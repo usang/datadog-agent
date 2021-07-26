@@ -1,5 +1,7 @@
 # SECL Documentation
 
+### Event types
+
 | SECL Event  | Type | Definition             | Agent Version |
 | ---         | ---  | ---                    | ---           |
 | *           |      |                        |               |

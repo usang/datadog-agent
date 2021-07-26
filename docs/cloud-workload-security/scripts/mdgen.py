@@ -29,6 +29,8 @@ class MarkdownTable:
 
 
 def event_types_list(event_types, file=sys.stdout):
+    print(f"### Event types\n", file=file)
+
     table = MarkdownTable(4)
     table.append_line(["SECL Event", "Type", "Definition", "Agent Version"])
     table.append_end_of_header()
